@@ -1,0 +1,21 @@
+{
+    "name": "kyrax324/laravel-pylon",
+    "description": "A collection of functions to assist the needs in developing laravel project (DRY)",
+    "keywords": ["laravel", "pylon", "helper"],
+    "type": "library",
+    "require": {
+        "php": ">=7.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kyrax324",
+            "email": "kyrax324@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pylon\\": "src/"
+        }
+    }
+}
