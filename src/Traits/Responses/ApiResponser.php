@@ -29,11 +29,15 @@ trait ApiResponser{
 		$code = $exception->getCode();
 
 		// if is unhandleable , throw to server to handler
-		if(!in_array($code, [400])){
+		if(!in_array($code, $this->catchableCode() )){
 			throw $exception;
 		}
 
 		return self::errorResponse( $message, $code );
 	}
+
+	public function catchableCode(){
+        return [ 400 ];
+    }
 
 }
