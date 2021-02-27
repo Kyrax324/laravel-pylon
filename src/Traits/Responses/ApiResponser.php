@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ApiResponser{
 
-    protected function successResponse( $message = null, $result = null, $code = Response::HTTP_OK )
+	protected function successResponse( $message = null, $result = null, $code = Response::HTTP_OK )
 	{
 		return response()->json([
 			'status'=> $code, 
@@ -37,7 +37,7 @@ trait ApiResponser{
 	}
 
 	public function catchableCode(){
-        return [ 400 ];
-    }
+		return [ 400 ];
+	}
 
 }

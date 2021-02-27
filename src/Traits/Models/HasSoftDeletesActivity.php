@@ -2,9 +2,8 @@
 
 namespace Pylon\Traits\Models;
 
-trait HasActivityScope{
+trait HasSoftDeletesActivity{
 
-	// scope
 	public function scopeWhereActivity($query, $value = 1)
 	{	
 		switch ($value) {
@@ -19,6 +18,15 @@ trait HasActivityScope{
 			default: // 0+1
 				// by default, only show is_deleted = null
 				break;
+		}
+	}
+
+	public function toggleActivity()
+	{
+		if($this->trashed()){
+			return $this->restore();
+		}else{
+			return $this->delete();
 		}
 	}
 }

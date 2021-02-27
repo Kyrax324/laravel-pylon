@@ -1,6 +1,6 @@
 # Laravel Pylon
 
-- A collection of functions to assist with the needs in developing laravel project (in 'Project Pylon')
+- A collection of functions to assist with the needs in developing laravel project.
 
 ## Installation
 
@@ -10,13 +10,19 @@ composer required kyrax324/laravel-pylon
 
 ## Usages
 
-### #Pylon\Traits\Models\HasActivityScope;
+- [Pylon\Traits\Models\HasSoftDeletesActivity](#pylontraitsmodelshassoftdeletesactivity)
+- [Pylon\Traits\Responses\ApiResponser](#pylontraitsresponsesapiresponser)
+- [Pylon\Traits\Rules\Queryable](#pylontraitsrulesqueryable)
 
-- provide an eloquent scope whereActivity() working with softdelete traits.
+### #Pylon\Traits\Models\HasSoftDeletesActivity;
 
-Example:
+- provide eloquent functions working with softdelete traits.
 
-- [refering laravel soft-delete](https://laravel.com/docs/8.x/eloquent#soft-deleting) 
+**1. whereActivity()**
+
+Example: 
+
+\* [by refering laravel soft-delete:](https://laravel.com/docs/8.x/eloquent#soft-deleting) 
 
 ```php
 <?php
@@ -25,48 +31,65 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Pylon\Traits\Models\HasActivityScope;
+use Pylon\Traits\Models\HasSoftDeletesActivity;
 
 class Flight extends Model
 {
-    use SoftDeletes, HasActivityScope;
+    use SoftDeletes, HasSoftDeletesActivity;
 }
 ```
 
-- querying
+-> return either onlyTrashed() or withTrashed().
 
 ```php
-	/*
-		value :
-		0 - onlyTrashed 
-		2 - withTrashed
-		else - (default - only active)
-	*/
+    /**
+    *   value :
+    *   0 - onlyTrashed 
+    *   2 - withTrashed
+    *   else - (default - only active)
+    */
+    $fight = Flight::query();
 	$fight->whereActivity($value);
+    // ...
 ```
 
+**2. toggleActivity()**
 
-### #Pylon\Traits\Rules\Responses;
+-> return restore() or delete().
+
+```php
+    $fightUser::withTrashed()->find(1);
+
+    $fight->toggleActivity();
+```
+
+### #Pylon\Traits\Responses\ApiResponser;
 
 - provide three methods:
 	- successResponse - return success api response
 	- errorResponse - return error api response
 	- exceptionCatcher - try to handle exception->code == 400 (by returning errorResponse with the exception->message)
 
-### #Pylon\Traits\Rules\Pageable;
+### #Pylon\Traits\Rules\Queryable;
 
-- provide a set of rules:
+provide a set of rules:
+
+- pagables :
 	- "page" => "sometimes|integer"
 	- "itemPerPage" => "sometimes|integer"
+- sortables :
 	- 'sortBy' => 'sometimes|string'
 	- 'sortDesc' => 'sometimes|boolean'
+- searchables :
+    - "search" => "sometimes|string"
+    - "searchBy" => "sometimes|string"
 
 Example:
 
 ```php
 class SomeRequest extends FormRequest
 {
-    use Pageable;
+    use Queryable;
 
     public function rules()
     {
@@ -74,29 +97,7 @@ class SomeRequest extends FormRequest
         		// some rules
             ],
             $this->pageables,
-        );
-    }
-
-```
-
-### #Pylon\Traits\Rules\Searchable;
-
-- provide a set of rules:
-	- "search" => "sometimes|string"
-	- "searchBy" => "sometimes|string"
-
-Example:
-
-```php
-class SomeRequest extends FormRequest
-{
-    use Searchable;
-
-    public function rules()
-    {
-        return array_merge([
-        		// some rules
-            ],
+            $this->sortables,
             $this->searchables,
         );
     }
