@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ApiResponser{
 
-	protected function successResponse( $message = null, $result = null, $code = Response::HTTP_OK )
+	public function successResponse( $message = null, $result = null, $code = Response::HTTP_OK )
 	{
 		return response()->json([
 			'status'=> $code, 
@@ -15,7 +15,7 @@ trait ApiResponser{
 		], $code);
 	}
 
-	protected function errorResponse( $message = null, $code)
+	public function errorResponse( $message = null, $code)
 	{
 		return response()->json([
 			'status'=> $code,
@@ -23,7 +23,7 @@ trait ApiResponser{
 		], $code);
 	}
 
-	protected function exceptionCatcher($exception)
+	public function exceptionCatcher($exception)
 	{
 		$message = $exception->getMessage();
 		$code = $exception->getCode();
