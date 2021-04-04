@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-composer required kyrax324/laravel-pylon
+composer require kyrax324/laravel-pylon
 ```
 
 ## Documentation
