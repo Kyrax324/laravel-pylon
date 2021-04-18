@@ -15,29 +15,12 @@ trait ApiResponser{
 		], $code);
 	}
 
-	public function errorResponse( $message = null, $code)
+	public function errorResponse( $message = null, $error = "ERROR", $code)
 	{
 		return response()->json([
 			'status'=> $code,
+			'error' => $error,
 			'message' => $message
 		], $code);
 	}
-
-	public function exceptionCatcher($exception)
-	{
-		$message = $exception->getMessage();
-		$code = $exception->getCode();
-
-		// if is unhandleable , throw to server to handler
-		if(!in_array($code, $this->catchableCode() )){
-			throw $exception;
-		}
-
-		return self::errorResponse( $message, $code );
-	}
-
-	public function catchableCode(){
-		return [ 400 ];
-	}
-
 }

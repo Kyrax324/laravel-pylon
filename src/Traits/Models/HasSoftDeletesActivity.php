@@ -20,7 +20,7 @@ trait HasSoftDeletesActivity{
 				break;
 		}
 	}
-
+	
 	public function toggleActivity()
 	{
 		if($this->trashed()){

@@ -4,13 +4,21 @@ namespace Pylon\Traits\Models;
 
 trait HasSearchScope{
 
-	public function scopeSearch($query, $key, $value = "")
-	{   
+	/**
+	 * Scope a query to search related records. ( unordered string )
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @param  string  $column
+	 * @param  string  $value
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeSearch($query, $column, $value)
+	{
 		$keywords = explode(" ",$value);
 
-		$query->where( function($q) use ($key, $keywords){
+		return $query->where( function($q) use ($column, $keywords){
 			foreach ($keywords as $keyword) {
-				$q->where($key, 'like', "%".$keyword."%");
+				$q->where($column, 'like', "%".$keyword."%");
 			}
 		});
 	}

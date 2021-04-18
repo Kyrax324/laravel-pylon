@@ -1,6 +1,6 @@
 # Laravel Pylon
 
-- A collection of functions to assist with the needs in developing laravel project.
+- A collection of helpers/functions to assist with the needs in developing laravel project.
 
 ## Installation
 
