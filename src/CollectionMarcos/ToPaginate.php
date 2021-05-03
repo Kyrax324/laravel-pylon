@@ -4,15 +4,17 @@ namespace Pylon\CollectionMarcos;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class Paginate
+class ToPaginate
 {
 	public function __invoke()
 	{
-		return function ($perPage = 15, $total = null, $page = null, $pageName = 'page'){
+		return function ($perPage = null, $total = null, $page = null, $pageName = 'page'){
+
+			$perPage = $perPage ?: 15;
 
 			$page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 
-			$total = $this->count();
+			$total = $total ?: $this->count();
 
 			$results = $this->forPage($page, $perPage)->values();
 

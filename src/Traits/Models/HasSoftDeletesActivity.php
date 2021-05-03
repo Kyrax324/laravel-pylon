@@ -21,6 +21,11 @@ trait HasSoftDeletesActivity{
 		}
 	}
 	
+    /**
+     * Restore or Delete a soft-deleted model instance.
+     *
+     * @return bool|null
+     */
 	public function restoreOrDelete()
 	{
 		if($this->trashed()){
