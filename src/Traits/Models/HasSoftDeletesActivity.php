@@ -21,7 +21,7 @@ trait HasSoftDeletesActivity{
 		}
 	}
 	
-	public function toggleActivity()
+	public function restoreOrDelete()
 	{
 		if($this->trashed()){
 			return $this->restore();
